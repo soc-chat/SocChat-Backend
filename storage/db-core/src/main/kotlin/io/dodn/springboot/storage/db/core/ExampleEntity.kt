@@ -4,7 +4,7 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 
 @Entity
-class ExampleEntity(
+class UserEntity(
     @Column
     val exampleColumn: String,
 ) : BaseEntity()
