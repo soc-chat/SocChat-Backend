@@ -64,6 +64,8 @@ subprojects {
         }
     }
 
+    // 나중에 필요 없는 Tasks 제거
+
     tasks.test {
         useJUnitPlatform {
             excludeTags("develop", "restdocs")
