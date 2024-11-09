@@ -3,12 +3,12 @@ package io.dodn.springboot.core.api.config
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
-import org.springframework.web.socket.WebSocketHandler
 import org.springframework.web.socket.WebSocketMessage
 import org.springframework.web.socket.WebSocketSession
+import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
-class WebSocketHandler: WebSocketHandler{
+class WebSocketHandler: TextWebSocketHandler() {
     val sessionList: MutableList<WebSocketSession> = mutableListOf()
     val chatList: MutableList<WebSocketMessage<*>> = mutableListOf()
 
@@ -33,9 +33,5 @@ class WebSocketHandler: WebSocketHandler{
     override fun afterConnectionClosed(session: WebSocketSession, closeStatus: CloseStatus) {
         println("연결 종료 ${session.id}")
         sessionList.remove(session)
-    }
-
-    override fun supportsPartialMessages(): Boolean {
-        return false
     }
 }
