@@ -8,7 +8,7 @@ import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
-class WebSocketHandler: TextWebSocketHandler() {
+class WebSocketHandler : TextWebSocketHandler() {
     val sessionList: MutableList<WebSocketSession> = mutableListOf()
     val chatList: MutableList<WebSocketMessage<*>> = mutableListOf()
 
@@ -18,7 +18,6 @@ class WebSocketHandler: TextWebSocketHandler() {
         for (i in chatList) {
             session.sendMessage(TextMessage(i.payload.toString()))
         }
-
     }
 
     override fun handleMessage(session: WebSocketSession, message: WebSocketMessage<*>) {
