@@ -9,8 +9,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
 class WebSocketHandler : TextWebSocketHandler() {
-    val sessionList: MutableList<WebSocketSession> = mutableListOf()
-    val chatList: MutableList<WebSocketMessage<*>> = mutableListOf()
 
     override fun afterConnectionEstablished(session: WebSocketSession) {
         sessionList.add(session)
@@ -32,5 +30,10 @@ class WebSocketHandler : TextWebSocketHandler() {
     override fun afterConnectionClosed(session: WebSocketSession, closeStatus: CloseStatus) {
         println("연결 종료 ${session.id}")
         sessionList.remove(session)
+    }
+
+    companion object {
+        val sessionList: MutableList<WebSocketSession> = mutableListOf()
+        val chatList: MutableList<WebSocketMessage<*>> = mutableListOf()
     }
 }
