@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }} backend
+        run: docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/backend .
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }} backend
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend

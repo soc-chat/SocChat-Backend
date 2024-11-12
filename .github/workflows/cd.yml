@@ -22,10 +22,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Pull Docker Image
-        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }} backend
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend
 
       - name: Remove Old Docker Container
         run: sudo docker rm -f backend || true
 
       - name: Run Updated Docker Container
-        run: sudo docker run -t --env-file ~/.env -d --name backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}
+        run: sudo docker run -t --env-file ~/.env -d --name backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/backend
