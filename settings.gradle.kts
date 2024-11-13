@@ -4,10 +4,8 @@ include(
     "core:core-enum",
     "core:core-api",
     "storage:db-core",
-    "tests:api-docs",
     "support:logging",
     "support:monitoring",
-    "clients:client-example"
 )
 
 pluginManagement {
