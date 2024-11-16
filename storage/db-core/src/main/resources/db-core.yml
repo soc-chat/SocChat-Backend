@@ -21,6 +21,7 @@ spring:
     console:
       enabled: true
 
+
 storage:
   datasource:
     core:
@@ -30,6 +31,8 @@ storage:
       pool-name: core-db-pool
       data-source-properties:
         rewriteBatchedStatements: true
+
+
 
 ---
 spring.config.activate.on-profile: live
