@@ -7,6 +7,17 @@ spring:
       - monitoring.yml
       - logging.yml
       - db-core.yml
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${security.oauth.google.client.id}
+            client-secret: ${security.oauth.google.client.secret}
+            scope:
+              - profile
+              - email
+
   web.resources.add-mappings: false
 
 server:
@@ -15,10 +26,12 @@ server:
     threads:
       max: 600
       min-spare: 100
+  port: 10001
 
----
-spring.config.activate.on-profile: local
 
----
-spring.config.activate.on-profile: live
+#---
+#spring.config.activate.on-profile: local
+#
+#---
+#spring.config.activate.on-profile: live
 
