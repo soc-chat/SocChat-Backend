@@ -1,5 +1,8 @@
 package io.dodn.springboot.core.api.config
 
+import io.dodn.springboot.core.api.dto.MessageDto
+import io.dodn.springboot.core.api.dto.MessageType
+import io.dodn.springboot.storage.db.core.KafkaProducer
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
@@ -9,27 +12,26 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
 class WebSocketHandler : TextWebSocketHandler() {
+    private val producer: KafkaProducer = KafkaProducer()
 
     override fun afterConnectionEstablished(session: WebSocketSession) {
-        sessionList.add(session)
-        println("연결 완료 ${session.id}")
-        for (i in chatList) {
+        sessionList.add(session) // 레디스로 구현 예정
+        for (i in chatList) { // 여기선 채팅 리스트를 불러와서 새로운 세션에 보내줌
             session.sendMessage(TextMessage(i.payload.toString()))
         }
     }
 
     override fun handleMessage(session: WebSocketSession, message: WebSocketMessage<*>) {
-        chatList.add(message)
-        println(message.toString())
+        val receiveMessage: MessageDto = message.payload as MessageDto
+        producer.sendMessageToKafka("chat-room-${receiveMessage.channel}", receiveMessage.toString())
     }
 
     override fun handleTransportError(session: WebSocketSession, exception: Throwable) {
-        println("전송 중 에러")
+        session.sendMessage(TextMessage(MessageDto(0, "에러가 발생했습니다", 0, MessageType.SYSTEM).toString()))
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, closeStatus: CloseStatus) {
-        println("연결 종료 ${session.id}")
-        sessionList.remove(session)
+        sessionList.remove(session) // 레디스로 구현 예정
     }
 
     companion object {
