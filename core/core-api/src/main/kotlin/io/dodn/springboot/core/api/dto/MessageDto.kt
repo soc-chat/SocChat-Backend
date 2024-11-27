@@ -1,7 +1,8 @@
 package io.dodn.springboot.core.api.dto
 
 data class MessageDto(
-    var content: String,
-    var userId: Long,
-    var type: MessageType,
+    val channel: Long,
+    val content: String,
+    val userId: Long,
+    val type: MessageType,
 )
