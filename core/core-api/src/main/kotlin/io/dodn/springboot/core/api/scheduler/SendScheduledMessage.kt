@@ -11,7 +11,7 @@ import org.springframework.web.socket.TextMessage
 class SendScheduledMessage {
     @Scheduled(fixedDelay = 5000)
     fun sendMessageByScheduled() {
-        for (i in sessionList) {
+        sessionList.forEach { i ->
             i.sendMessage(
                 TextMessage(
                     MessageDto(
