@@ -1,5 +1,7 @@
 package io.dodn.springboot.core.api.config
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.dodn.springboot.core.api.dto.MessageDto
 import io.dodn.springboot.core.api.dto.MessageType
 import io.dodn.springboot.storage.db.core.KafkaProducer
@@ -13,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 @Component
 class WebSocketHandler : TextWebSocketHandler() {
     private val producer: KafkaProducer = KafkaProducer()
+    private val objectMapper = jacksonObjectMapper()
 
     override fun afterConnectionEstablished(session: WebSocketSession) {
         sessionList.add(session) // 레디스로 구현 예정
@@ -21,8 +24,11 @@ class WebSocketHandler : TextWebSocketHandler() {
         }
     }
 
-    override fun handleMessage(session: WebSocketSession, message: WebSocketMessage<*>) {
-        val receiveMessage: MessageDto = message.payload as MessageDto
+    override fun handleMessage(
+        session: WebSocketSession,
+        message: WebSocketMessage<*>,
+    ) {
+        val receiveMessage: MessageDto = objectMapper.readValue(message.payload.toString(), MessageDto::class.java)
         producer.sendMessageToKafka("chat-room-${receiveMessage.channel}", receiveMessage.toString())
     }
 
