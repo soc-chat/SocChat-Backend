@@ -1,5 +1,5 @@
 package io.dodn.springboot.core.api.dto
 
-data class LoginDto(
+data class LoginRequestDto(
     val code: String,
 )
