@@ -20,4 +20,6 @@ class KafkaProducer {
 
     fun sendMessageToKafka(topic: String, message: String): Future<RecordMetadata> =
         producer.send(ProducerRecord(topic, message))
+
+    // 토픽 존재 여부 확인 함수 필요
 }
