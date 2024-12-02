@@ -1,7 +1,6 @@
 package io.dodn.springboot.core.api.config
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.dodn.springboot.core.api.dto.MessageDto
 import io.dodn.springboot.core.api.dto.MessageType
 import io.dodn.springboot.storage.db.core.KafkaProducer
@@ -29,11 +28,24 @@ class WebSocketHandler : TextWebSocketHandler() {
         message: WebSocketMessage<*>,
     ) {
         val receiveMessage: MessageDto = objectMapper.readValue(message.payload.toString(), MessageDto::class.java)
+        if (producer.)
         producer.sendMessageToKafka("chat-room-${receiveMessage.channel}", receiveMessage.toString())
     }
 
     override fun handleTransportError(session: WebSocketSession, exception: Throwable) {
-        session.sendMessage(TextMessage(MessageDto(0, "에러가 발생했습니다", 0, MessageType.SYSTEM).toString()))
+        session.sendMessage(
+            TextMessage(
+                MessageDto(
+                    messageId = 0L,
+                    channel = 0L,
+                    content = "문제가 발생했어요",
+                    parentMessageId = 0L,
+                    userId = 0L,
+                    type = MessageType.SYSTEM,
+                    isBlind = false,
+                ).toString(),
+            ),
+        )
     }
 
     override fun afterConnectionClosed(session: WebSocketSession, closeStatus: CloseStatus) {

@@ -19,6 +19,9 @@ class SendScheduledMessage {
                         type = MessageType.PING,
                         userId = 0,
                         channel = 0,
+                        messageId = 0,
+                        parentMessageId = 0,
+                        isBlind = false,
                     ).toString(),
                 ),
             )
