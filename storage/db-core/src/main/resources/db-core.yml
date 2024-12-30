@@ -5,6 +5,9 @@ spring:
       ddl-auto: none
     properties:
       hibernate.default_batch_fetch_size: 100
+  redis:
+    port: ${storage.database.core-db.redis.port}
+    host: ${storage.database.core-db.redis.host}
 
 ---
 spring.config.activate.on-profile: local
