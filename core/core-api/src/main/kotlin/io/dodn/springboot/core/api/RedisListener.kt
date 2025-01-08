@@ -7,8 +7,10 @@ import org.springframework.data.redis.connection.Message
 import org.springframework.data.redis.connection.MessageListener
 import org.springframework.http.HttpStatus
 import org.springframework.messaging.simp.SimpMessageSendingOperations
+import org.springframework.stereotype.Component
 import org.springframework.web.server.ResponseStatusException
 
+@Component
 class RedisListener : MessageListener {
     private val redisTemplate = RedisConfig().redisTemplate()
     private val objectMapper = jacksonObjectMapper()

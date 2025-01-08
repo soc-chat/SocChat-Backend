@@ -1,5 +1,6 @@
 package io.dodn.springboot.core.api.config
 
+import io.dodn.springboot.core.api.RedisListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
@@ -22,18 +23,20 @@ class RedisConfig {
     @Bean
     fun redisTemplate(): RedisTemplate<Any, Any> {
         val redisTemplate = RedisTemplate<Any, Any>()
-        redisTemplate.connectionFactory = redisConnectionFactory() // 직접 호출 대신 필드 사용
+        redisTemplate.connectionFactory = redisConnectionFactory()
         redisTemplate.keySerializer = StringRedisSerializer()
         redisTemplate.valueSerializer = StringRedisSerializer()
         return redisTemplate
     }
 
     @Bean
-    fun RedisMessageListenerContainer(connectionFactory: LettuceConnectionFactory): RedisMessageListenerContainer {
+    fun RedisMessageListenerContainer(
+        connectionFactory: LettuceConnectionFactory,
+        redisListener: RedisListener,
+    ): RedisMessageListenerContainer {
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(connectionFactory)
-        container.addMessageListener(messageListener(), chatTopic())
-        container.addMessageListener(messageListener(), sessionTopic())
+        container.addMessageListener(redisListener, chatTopic())
         return container
     }
 
@@ -42,7 +45,4 @@ class RedisConfig {
 
     @Bean
     fun chatTopic(): ChannelTopic = ChannelTopic("chat")
-
-    @Bean
-    fun sessionTopic(): ChannelTopic = ChannelTopic("session")
 }
