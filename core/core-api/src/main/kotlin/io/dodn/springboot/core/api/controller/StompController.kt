@@ -9,13 +9,10 @@ import org.springframework.stereotype.Controller
 @Controller
 class StompController(
     private val chatService: ChatService,
+    private val simpMessageSendingOperations: SimpMessageSendingOperations,
 ) {
-    private lateinit var simpMessageSendingOperations: SimpMessageSendingOperations
-
     @MessageMapping("/send")
-    private fun sendMessage(
-        message: MessageDto,
-    ) {
+    private fun sendMessage(message: MessageDto) {
         chatService.publishMessage(message)
         simpMessageSendingOperations.convertAndSend("/sub/chat/room/${message.channel}", message)
     }
