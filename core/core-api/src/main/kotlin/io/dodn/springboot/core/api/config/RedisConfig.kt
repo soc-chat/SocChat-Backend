@@ -16,21 +16,22 @@ class RedisConfig {
     private val port = 6379
 
     @Bean
-    fun redisConnectionFactory(): LettuceConnectionFactory = LettuceConnectionFactory(RedisStandaloneConfiguration(host, port))
+    fun redisConnectionFactory(): LettuceConnectionFactory =
+        LettuceConnectionFactory(RedisStandaloneConfiguration(host, port))
 
     @Bean
-    fun redisTemplate(factory: LettuceConnectionFactory): RedisTemplate<Any, Any> {
+    fun redisTemplate(): RedisTemplate<Any, Any> {
         val redisTemplate = RedisTemplate<Any, Any>()
-        redisTemplate.connectionFactory = factory
+        redisTemplate.connectionFactory = redisConnectionFactory() // 직접 호출 대신 필드 사용
         redisTemplate.keySerializer = StringRedisSerializer()
         redisTemplate.valueSerializer = StringRedisSerializer()
         return redisTemplate
     }
 
     @Bean
-    fun RedisMessageListenerContainer(factory: LettuceConnectionFactory): RedisMessageListenerContainer {
+    fun RedisMessageListenerContainer(connectionFactory: LettuceConnectionFactory): RedisMessageListenerContainer {
         val container = RedisMessageListenerContainer()
-        container.setConnectionFactory(factory)
+        container.setConnectionFactory(connectionFactory)
         container.addMessageListener(messageListener(), chatTopic())
         container.addMessageListener(messageListener(), sessionTopic())
         return container
