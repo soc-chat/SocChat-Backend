@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class ChatService(
-    private var chatRoomRepository: ChatRoomRepository,
+    private val chatRoomRepository: ChatRoomRepository,
+    redisConfig: RedisConfig,
 ) {
-    private val redisTemplate = RedisConfig().redisTemplate()
+    private val redisTemplate = redisConfig.redisTemplate()
 
     fun publishMessage(message: MessageDto) {
         chatRoomRepository.findById(message.channel).orElseThrow()
