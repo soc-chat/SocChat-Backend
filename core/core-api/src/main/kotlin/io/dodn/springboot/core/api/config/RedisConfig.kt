@@ -37,6 +37,9 @@ class RedisConfig {
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(connectionFactory)
         container.addMessageListener(redisListener, chatTopic())
+        container.setErrorHandler { error ->
+            println("Redis Listener Error: ${error.message}")
+        }
         return container
     }
 
