@@ -17,8 +17,12 @@ spring:
             scope:
               - profile
               - email
-
+  data:
+    redis:
+      host: ${spring.data.redis.host}
+      port: ${spring.data.redis.port}
   web.resources.add-mappings: false
+
 
 server:
   tomcat:
