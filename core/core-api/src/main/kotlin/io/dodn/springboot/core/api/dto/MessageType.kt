@@ -4,6 +4,4 @@ enum class MessageType {
     PING,
     MESSAGE,
     SYSTEM,
-    JOIN,
-    EXIT,
 }
