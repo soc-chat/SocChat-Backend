@@ -20,8 +20,6 @@ class ChatService(
         chatRoomRepository.findById(message.channel).orElseThrow()
         val messageJson = objectMapper.writeValueAsString(message)
         redisTemplate.convertAndSend("chat", messageJson)
-        // 메시지 비속어 + 도배 확인 => 추가 해야함
-        // 배치 처리를 이용한 메시지 저장 => n00개당 한번
     }
 
     fun findChatRoom(roomId: Long): ChatRoomEntity = chatRoomRepository.findById(roomId).orElseThrow()
