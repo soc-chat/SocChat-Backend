@@ -1,6 +1,6 @@
-package io.dodn.springboot.core.api.config
+package io.dodn.springboot.core.config
 
-import io.dodn.springboot.core.api.RedisListener
+import io.dodn.springboot.core.RedisListener
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

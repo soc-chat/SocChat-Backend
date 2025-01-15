@@ -1,7 +1,7 @@
-package io.dodn.springboot.core.api.controller
+package io.dodn.springboot.core.controller
 
-import io.dodn.springboot.core.api.dto.MessageDto
-import io.dodn.springboot.core.api.service.ChatService
+import io.dodn.springboot.core.dto.MessageDto
+import io.dodn.springboot.core.service.ChatService
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 

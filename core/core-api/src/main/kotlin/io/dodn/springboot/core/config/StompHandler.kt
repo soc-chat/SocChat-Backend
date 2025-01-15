@@ -1,4 +1,4 @@
-package io.dodn.springboot.core.api.config
+package io.dodn.springboot.core.config
 
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
 import org.springframework.stereotype.Component

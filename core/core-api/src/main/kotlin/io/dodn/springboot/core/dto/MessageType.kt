@@ -1,4 +1,4 @@
-package io.dodn.springboot.core.api.dto
+package io.dodn.springboot.core.dto
 
 enum class MessageType {
     PING,

@@ -1,7 +1,7 @@
-package io.dodn.springboot.core.api.controller
+package io.dodn.springboot.core.controller
 
-import io.dodn.springboot.core.api.dto.ChatRoomDto
-import io.dodn.springboot.core.api.service.ChatService
+import io.dodn.springboot.core.dto.ChatRoomDto
+import io.dodn.springboot.core.service.ChatService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

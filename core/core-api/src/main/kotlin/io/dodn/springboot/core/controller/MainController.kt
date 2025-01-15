@@ -1,4 +1,4 @@
-package io.dodn.springboot.core.api.controller
+package io.dodn.springboot.core.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,7 +1,7 @@
-package io.dodn.springboot.core.api
+package io.dodn.springboot.core
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.dodn.springboot.core.api.dto.MessageDto
+import io.dodn.springboot.core.dto.MessageDto
 import org.springframework.data.redis.connection.Message
 import org.springframework.data.redis.connection.MessageListener
 import org.springframework.http.HttpStatus
