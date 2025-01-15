@@ -18,6 +18,9 @@ class ChatRoomEntity(
     val description: String,
 
     @Column
+    val startTime: LocalDateTime = LocalDateTime.now().plusMinutes(3),
+
+    @Column
     val expireTime: LocalDateTime = LocalDateTime.now().plusMinutes(30),
 
 ) : BaseEntity()
