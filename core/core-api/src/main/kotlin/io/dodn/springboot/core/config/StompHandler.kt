@@ -1,5 +1,6 @@
 package io.dodn.springboot.core.config
 
+import io.dodn.springboot.core.StompHandler
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
@@ -16,6 +17,7 @@ class StompHandler : WebSocketMessageBrokerConfigurer {
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/stomp/chat")
+            .addInterceptors(StompHandler())
             .setAllowedOriginPatterns("*").withSockJS()
     }
 }
