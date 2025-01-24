@@ -5,6 +5,7 @@ spring:
       ddl-auto: create
     properties:
       hibernate.default_batch_fetch_size: 100
+      hibernate.order_inserts: true
   redis:
     port: ${storage.database.core-db.redis.port}
     host: ${storage.database.core-db.redis.host}
