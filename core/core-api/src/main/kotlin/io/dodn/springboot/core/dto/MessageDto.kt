@@ -5,6 +5,6 @@ data class MessageDto(
     val content: String,
     val isReply: Boolean,
     val userId: Long,
-    val parentMessageId: Long?,
+    val parentMessageId: Long,
     val type: MessageType,
 )
