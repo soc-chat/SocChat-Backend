@@ -5,6 +5,7 @@ import io.dodn.springboot.core.config.RedisConfig
 import io.dodn.springboot.core.dto.MessageDto
 import io.dodn.springboot.storage.db.core.entity.ChatEntity
 import io.dodn.springboot.storage.db.core.entity.ChatRoomEntity
+import io.dodn.springboot.storage.db.core.repository.BulkRepository
 import io.dodn.springboot.storage.db.core.repository.ChatRepository
 import io.dodn.springboot.storage.db.core.repository.ChatRoomRepository
 import org.springframework.stereotype.Service
@@ -13,6 +14,7 @@ import java.time.LocalDateTime
 @Service
 class ChatService(
     private val chatRoomRepository: ChatRoomRepository,
+    private val bulkRepository: BulkRepository,
     private val chatRepository: ChatRepository,
     redisConfig: RedisConfig,
 ) {
@@ -24,40 +26,37 @@ class ChatService(
     fun addEntity(
         channel: Long,
         content: String,
-        isReply: Boolean,
-        userId: Long,
-        parentMessageId: Long,
+        userId: String,
         type: String,
     ) {
         val entity = ChatEntity(
             channel = channel,
             content = content,
-            isReply = isReply,
             userId = userId,
-            parentMessageId = parentMessageId,
             type = type,
         )
         synchronized(this) {
             entities.add(entity)
             println(entities.size)
             if (entities.size >= 100) {
-                chatRepository.batchInsert(entities)
+                bulkRepository.batchInsert(entities)
             }
         }
     }
 
     fun publishMessage(message: MessageDto, sessionId: String) {
-        val messageJson = objectMapper.writeValueAsString(message.copy())
+        val result = message.copy(userId = sessionId)
+        val messageJson = objectMapper.writeValueAsString(result)
         redisTemplate.convertAndSend("chat", messageJson)
         addEntity(
-            channel = message.channel,
-            content = message.content,
-            isReply = message.isReply,
-            userId = message.userId,
-            parentMessageId = message.parentMessageId,
-            type = message.type.toString(),
+            channel = result.channel,
+            content = result.content,
+            userId = result.userId,
+            type = result.type.toString(),
         )
     }
+
+    fun getLastChatting(roomId: Long): List<ChatEntity> = chatRepository.findAllByChannel(roomId)
 
     fun findChatRoom(roomId: Long): ChatRoomEntity = chatRoomRepository.findById(roomId).orElseThrow()
 
