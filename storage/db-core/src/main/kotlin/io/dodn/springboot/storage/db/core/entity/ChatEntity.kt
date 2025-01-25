@@ -14,13 +14,7 @@ class ChatEntity(
     val content: String,
 
     @Column
-    val isReply: Boolean,
-
-    @Column
-    val userId: Long,
-
-    @Column
-    val parentMessageId: Long,
+    val userId: String,
 
     @Column
     val type: String,
