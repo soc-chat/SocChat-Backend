@@ -18,6 +18,7 @@ class StompHandler : HandshakeInterceptor {
         if (request is ServletServerHttpRequest) {
             val session = request.servletRequest.session
             attributes["sessionId"] = session.id
+            response.headers.add("sessionId", session.id)
         }
         return true
     }
