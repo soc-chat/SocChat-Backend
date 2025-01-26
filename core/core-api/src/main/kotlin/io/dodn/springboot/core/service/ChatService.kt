@@ -8,6 +8,7 @@ import io.dodn.springboot.storage.db.core.entity.ChatRoomEntity
 import io.dodn.springboot.storage.db.core.repository.BulkRepository
 import io.dodn.springboot.storage.db.core.repository.ChatRepository
 import io.dodn.springboot.storage.db.core.repository.ChatRoomRepository
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -20,6 +21,7 @@ class ChatService(
 ) {
     private val redisTemplate = redisConfig.redisTemplate()
     private val objectMapper = jacksonObjectMapper()
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     private val entities: MutableList<ChatEntity> = mutableListOf()
 
@@ -37,9 +39,13 @@ class ChatService(
         )
         synchronized(this) {
             entities.add(entity)
-            println(entities.size)
             if (entities.size >= 100) {
-                bulkRepository.batchInsert(entities)
+                try {
+                    bulkRepository.batchInsert(entities)
+                    entities.clear()
+                } catch (e: Exception) {
+                    logger.error("${e}\n채팅 내역 배치 작업에 실패했어요.")
+                }
             }
         }
     }
