@@ -68,7 +68,7 @@ class ChatService(
 
     fun availableChatRoomList(): List<ChatRoomEntity> {
         val currentTime = LocalDateTime.now()
-        return chatRoomRepository.findByStartTimeAfterAndExpireTimeBefore(
+        return chatRoomRepository.findByStartTimeBeforeAndExpireTimeAfter(
             startTime = currentTime,
             expireTime = currentTime,
         )
