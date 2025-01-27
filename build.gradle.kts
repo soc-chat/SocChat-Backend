@@ -63,44 +63,4 @@ subprojects {
             jvmTarget = "${project.property("javaVersion")}"
         }
     }
-
-    // 나중에 필요 없는 Tasks 제거
-
-    tasks.test {
-        useJUnitPlatform {
-            excludeTags("develop", "restdocs")
-        }
-    }
-
-    tasks.register<Test>("unitTest") {
-        group = "verification"
-        useJUnitPlatform {
-            excludeTags("develop", "context", "restdocs")
-        }
-    }
-
-    tasks.register<Test>("contextTest") {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("context")
-        }
-    }
-
-    tasks.register<Test>("restDocsTest") {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("restdocs")
-        }
-    }
-
-    tasks.register<Test>("developTest") {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("develop")
-        }
-    }
-
-    tasks.getByName("asciidoctor") {
-        dependsOn("restDocsTest")
-    }
 }
