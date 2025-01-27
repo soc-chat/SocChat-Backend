@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.time.LocalDateTime
 
 interface ChatRoomRepository : JpaRepository<ChatRoomEntity, Long> {
-    fun findByStartTimeAfterAndExpireTimeBefore(
+    fun findByStartTimeBeforeAndExpireTimeAfter(
         startTime: LocalDateTime,
         expireTime: LocalDateTime,
     ): List<ChatRoomEntity>
