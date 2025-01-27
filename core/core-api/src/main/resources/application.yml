@@ -31,11 +31,3 @@ server:
       max: 600
       min-spare: 100
   port: 10001
-
-
-#---
-#spring.config.activate.on-profile: local
-#
-#---
-#spring.config.activate.on-profile: live
-
