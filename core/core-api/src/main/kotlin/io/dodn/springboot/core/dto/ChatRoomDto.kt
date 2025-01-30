@@ -4,6 +4,7 @@ import io.dodn.springboot.storage.db.core.entity.ChatRoomEntity
 import java.time.LocalDateTime
 
 data class ChatRoomDto(
+    val id: Long,
     val name: String,
     val image: String,
     val description: String,
@@ -12,6 +13,7 @@ data class ChatRoomDto(
 ) {
     companion object {
         fun from(entity: ChatRoomEntity): ChatRoomDto = ChatRoomDto(
+            id = entity.id,
             name = entity.name,
             image = entity.image,
             description = entity.description,
