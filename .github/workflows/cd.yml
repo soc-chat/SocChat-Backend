@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
         run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend
 
       - name: Remove Old Docker Container
-        run: docker rm -f backend || true
+        run: docker rm -f socchat-backend || true
 
       - name: Run Updated Docker Container
         run: cd /home/ubuntu && docker-compose up -d
